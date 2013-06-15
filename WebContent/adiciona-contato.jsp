@@ -11,11 +11,12 @@
 	</head>
 	<body>
 		<c:import url="cabecalho.jsp"/>
-		<form action="adicionaContato">
+		<form action="mvc" method="post">
 			Nome: <input type="text" name="nome"/><br />
 			E-mail: <input type="text" name="email"/><br />
 			Endereco: <input type="text" name="endereco"/><br />
 			Data Nascimento: <caelum:campoData id="dataNascimento"/><br />
+			<input type="hidden" name="logica" value="AdicionaContatoLogica"/>
 			<input type="submit" value="Gravar"/>		
 		</form>
 		<c:import url="rodape.jsp"/>
