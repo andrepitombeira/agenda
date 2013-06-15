@@ -33,7 +33,8 @@
 				<td>
 					<fmt:formatDate value="${contato.dataNascimento.time}" pattern="dd/MM/yyyy"/>
 				</td>
-				<td><a href="mvc?logica=RemoveContatoLogica&id=${contato.id}">Delete</a></td>
+				<td><a href="mvc?logica=RemoveContatoLogica&id=<c:out value="${contato.id}"/>">Delete</a></td>
+				<td><a href="mvc?logica=AlteraContatoLogica&id=<c:out value="${contato.id}"/>">Editar</a></td>
 			</tr>		
 		</c:forEach>
 	</table>

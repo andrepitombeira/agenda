@@ -81,14 +81,15 @@ public class ContatoDao {
 		return contatos;
 	}
 	
-	public Contato getById(int id) {
+	public Contato getById(long id) {
 		String sql = "select * from contatos where id = ?";
 		Contato contato = new Contato();
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, id);
+			stmt.setLong(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
+				contato.setId(Long.parseLong(rs.getString("id")));
 				contato.setNome(rs.getString("nome"));
 				contato.setEmail(rs.getString("email"));
 				contato.setEndereco(rs.getString("Endereco"));

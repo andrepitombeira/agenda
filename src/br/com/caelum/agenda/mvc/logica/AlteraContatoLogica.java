@@ -17,24 +17,33 @@ public class AlteraContatoLogica implements Logica {
 	public void executa(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		Contato contato = new Contato();
-		long id = Long.parseLong(request.getParameter("id"));
-		contato.setId(id);
-		contato.setNome(request.getParameter("nome"));
-		contato.setEndereco(request.getParameter("endereco"));
-		contato.setEmail(request.getParameter("email"));
-		
-		String dataEmTexto = request.getParameter("dataNascimento");
-		Date date = new SimpleDateFormat("dd/MM/yyyy").parse(dataEmTexto);
-		
-		Calendar dataNascimento = Calendar.getInstance();
-		dataNascimento.setTime(date);
-		
-		contato.setDataNascimento(dataNascimento);
-		
 		ContatoDao dao = new ContatoDao();
-		dao.atualiza(contato);
+		RequestDispatcher rd = null;
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/lista-contatos-elegante.jsp");
+		long id = Long.parseLong(request.getParameter("id"));
+		
+		if(request.getParameter("nome") != null && !request.getParameter("nome").isEmpty()) {
+			contato.setId(id);
+			contato.setNome(request.getParameter("nome"));
+			contato.setEndereco(request.getParameter("endereco"));
+			contato.setEmail(request.getParameter("email"));
+			
+			String dataEmTexto = request.getParameter("dataNascimento");
+			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(dataEmTexto);
+			
+			Calendar dataNascimento = Calendar.getInstance();
+			dataNascimento.setTime(date);
+			
+			contato.setDataNascimento(dataNascimento);
+			
+			dao.atualiza(contato);
+			
+			rd = request.getRequestDispatcher("/lista-contatos-elegante.jsp");
+		} else {
+			contato = dao.getById(id);
+			rd = request.getRequestDispatcher("/altera-contato.jsp");
+		}
+		request.setAttribute("contato", contato);		
 		rd.forward(request, response);
 		System.out.println("Alterando contato... " + contato.getNome());
 	}
