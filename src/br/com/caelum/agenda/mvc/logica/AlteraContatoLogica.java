@@ -2,6 +2,7 @@ package br.com.caelum.agenda.mvc.logica;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.RequestDispatcher;
@@ -17,7 +18,8 @@ public class AlteraContatoLogica implements Logica {
 	public void executa(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		Contato contato = new Contato();
-		ContatoDao dao = new ContatoDao();
+		Connection connection = (Connection) request.getAttribute("conexao");
+		ContatoDao dao = new ContatoDao(connection);
 		RequestDispatcher rd = null;
 		
 		long id = Long.parseLong(request.getParameter("id"));

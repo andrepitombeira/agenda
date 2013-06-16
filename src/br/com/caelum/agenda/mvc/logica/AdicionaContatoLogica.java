@@ -1,5 +1,6 @@
 package br.com.caelum.agenda.mvc.logica;
 
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -7,6 +8,8 @@ import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.sun.jndi.cosnaming.CNNameParser;
 
 import br.com.caelum.agenda.dao.ContatoDao;
 import br.com.caelum.agenda.modelo.Contato;
@@ -17,7 +20,8 @@ public class AdicionaContatoLogica implements Logica {
 	public void executa(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		Contato contato = new Contato();
-		ContatoDao dao = new ContatoDao();
+		Connection connection = (Connection) request.getAttribute("conexao");
+		ContatoDao dao = new ContatoDao(connection);
 		RequestDispatcher rd = null;
 		
 		if(request.getParameter("nome") != null && !request.getParameter("nome").isEmpty()) {

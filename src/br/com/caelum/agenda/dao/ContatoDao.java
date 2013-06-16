@@ -15,6 +15,10 @@ import br.com.caelum.agenda.modelo.Contato;
 public class ContatoDao {
 	private Connection connection;
 	
+	public ContatoDao(Connection connection) {
+		this.connection = connection;
+	}
+	
 	public ContatoDao() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
